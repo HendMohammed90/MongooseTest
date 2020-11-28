@@ -15,7 +15,9 @@ const mongoose = require('mongoose');
         ]
     },
     role: {
-        type: String
+        type: String ,
+        enum : ['admin' , 'manger' , 'clint'] ,
+        default : "clint"
     },
     password: {
         type: String,
