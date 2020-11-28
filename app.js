@@ -39,8 +39,14 @@ Cart.find((err,data)=>{
     if(err)  console.log(err);
     else  console.log(data);
 })
-// .populate('user')
+.populate('user')
 // .populate('Products')
+// .populate({
+//     path: 'Products',
+//     populate: { path: 'products', model: 'Products' }}) ;
 .populate({
-    path: 'Products',
-    populate: { path: 'products', model: 'Products' }}) ;
+    path :'products' ,
+    populate :{
+        path :'productId'
+    }
+})

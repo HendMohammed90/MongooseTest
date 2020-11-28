@@ -14,17 +14,21 @@ const CartSchema = new mongoose.Schema({
         ref: 'Products',
         // amount : Number,
         required: true
-    },
-    amount : {
-        type :Number ,
-        required  : true
-    }}
+    }
+    // ,
+    // amount : {
+    //     type :Number ,
+    //     required  : true
+    // }
+}
 ],
     date: {
         type: Date,
             default: Date.now,
         }
     });
+    // {type:[mongoose.Schema.Types.ObjectId],ref: 'Video'},
+    // [{type:mongoose.Schema.Types.ObjectId,ref: 'Video'}],
 
 
 const Cart = mongoose.model('Cart', CartSchema);
