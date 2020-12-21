@@ -34,19 +34,40 @@ const connectDB = require('./config/dp');
 
 // vProducts.create({vendor : "5fc185f19aa0fcd7f046c71d" ,products :[{ productId : "5fb5492d2f47f510aa939290" ,amount : 20 }, {productId : "5fc17cb05dd33bd57561670a" ,amount :30 } ]})
 
+//My Try:-
+//========================
 
-Cart.find((err,data)=>{
-    if(err)  console.log(err);
-    else  console.log(data);
-})
-.populate('user')
-// .populate('Products')
+// Cart.find()
 // .populate({
-//     path: 'Products',
-//     populate: { path: 'products', model: 'Products' }}) ;
+//     path :'products.productId' ,
+    // populate :{
+    //     path :'productId'
+    // }
+    // select :'name:' ,
+    // select : 'products.amount' ,
+    // select : {'productId.name': 1} ,
+    modale :'Products'
+// })
+// .populate('user')
+// .populate('products.productId')
+// .exec((err,data)=>{
+//     if(err)  console.log(err);
+//     else  console.log(data[1].products);
+// })
+
+
+//by using exec():-
+//==========================
+
+Cart.find()
+.populate('user')
+// .populate('products.productId')
 .populate({
-    path :'products' ,
-    populate :{
-        path :'productId'
-    }
+    path :'products.productId' ,
+    // select : 'name' ,
+    select : {'name' : 1 , 'description' : 1}
+})
+.exec((err, res)=>{
+    if(err) console.log(err);
+    else console.log(res[1].products); //here to get the products 
 })
