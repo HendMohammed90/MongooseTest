@@ -15,13 +15,17 @@ const VendorProductSchema = new mongoose.Schema({
     },
     amount : {
         type :Number ,
-        required  : true
+        required  : true  
     }}
 ],
     date: {
         type: Date,
-            default: Date.now,
-        }
+        default: Date.now,
+        } ,
+
+    totalPrice : {
+        type : Number
+    }
     });
 
 

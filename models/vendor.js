@@ -24,6 +24,10 @@ const mongoose = require('mongoose');
             'Please add a valid email'
         ]
     },
+    company : {
+        type : String ,
+        required : true
+    }
 });
 
 
