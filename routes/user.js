@@ -83,6 +83,38 @@ router.delete('/:id' , async(req,res)=>{
       }
 } )
 
+//Add More than one User                     //Worked ^_^
+//=========================
+router.post('/addAllUsers' , async (req, res)=>{
+    // console.log(req.body);
+    try {
+        let addUsers = [];
+        let userArray = req.body;
+        userArray.forEach(async(element)=>{
+            try {
+                const newUser = await Users.create(element);
+                newUser.save();
+                if(newUser) addUsers.push(newUser);
+                else throw new Error();
+            }catch (e){
+                console.log(e);
+            }
+        })
+
+        if(addUsers.length === userArray.length){
+            res.status(201).json({
+                success: true,
+                data:  addUsers
+            });
+        }else {
+            res.send(userArray);
+        }
+    }catch (error){
+        console.log(error)
+    }
+})
+
+
 
 
 module.exports = router;
