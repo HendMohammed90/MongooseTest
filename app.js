@@ -20,6 +20,7 @@ const products = require('./routes/product')
 const vendors = require('./routes/vendor')
 const VProducts = require('./routes/vProducts')
 const cart = require('./routes/cart');
+const auth = require('./routes/auth');
 
 
 
@@ -29,6 +30,8 @@ app.use('/api/v1/products', products);
 app.use('/api/v1/vendors', vendors);
 app.use('/api/v1/vproducts', VProducts);
 app.use('/api/v1/cart', cart);
+app.use('/api/v1/auth', auth);
+
 
 
 //Calling Our Server

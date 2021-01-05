@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const Joi = require('joi');
 
   const UserSchema = new mongoose.Schema({
     name: {
@@ -27,7 +29,31 @@ const mongoose = require('mongoose');
     }
 });
 
+// Encrypt password using bcrypt
+UserSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) { // this for check I update the password this method want to be not runing
+        next();
+    }
 
-const Users = mongoose.model('Users', UserSchema);
+    const salt = await bcrypt.genSalt(10); //كل ما رقم الراوند علي كل ما قوة الباسوورد زادت  أمان الباسوورد ولاكن يزداد  ثقل السيستيم
+    this.password = await bcrypt.hash(this.password, salt);
+});
 
-module.exports = Users ;
+
+// Match user entered password to hashed password in database
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+
+
+
+    // const validateschema = {
+    //     name: Joi.string().min(5).max(50).required(),
+    //     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+    //     password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(6).max(10).required(),
+    //     role : Joi.string().required().valid('admin' , 'manger' , 'clint')
+    // };
+
+module.exports = mongoose.model('Users', UserSchema);
+
+// exports.validateschema = validateschema;

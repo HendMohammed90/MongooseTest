@@ -1,7 +1,17 @@
 const express = require("express");
 const Users = require('../models/users');
+const Joi = require('joi');
 
 const router = express.Router({ mergeParams: true });
+
+const validateschema = {
+    name: Joi.string().min(5).max(50).required(),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+    password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(6).max(10).required(),
+    role : Joi.string().required().valid('admin' , 'manger' , 'clint')
+};
+
+
 
  //Get All Data Of Users                    //Worked ^_^
   //=========================
@@ -17,11 +27,23 @@ router.get('/',async(req,res)=>{
       }
 });
 
- //Creat Single User                      //Worked ^_^
+ //Creat Single User                      // Worked ^_^ & (JOI DIDN'T WORK -_-)
   //=========================
 router.post('/' ,async(req,res)=>{
     try {
         // console.log(req.body);
+        // const { error } = await validateschema.validateAsync(req.body);
+        //
+        // if (error) return res.status(400).send(error.details[0].message);
+        //
+        // let user = await Users.findOne({email : req.body.email});
+        //
+        // if(user) return res.status(400).send("Invalid Email It's alredy saved in database");
+
+        // user = new User(req.body);
+        //
+        // await user.save();
+
         const user = await Users.create(req.body);
         console.log('User Created');
         res.status(201).json({
